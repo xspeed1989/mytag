@@ -1,4 +1,4 @@
-FROM python:3.7.4-slim as base
+FROM python:3.8-slim as base
 
 # Create app directory
 WORKDIR /app
@@ -6,13 +6,11 @@ WORKDIR /app
 # Install app dependencies
 COPY ./docker/sources.list .
 
-RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && mv ./sources.list /etc/apt/
-
 RUN apt-get -o Acquire::Check-Valid-Until=false update \
     && apt-get install \
     --no-install-recommends --yes \
-    build-essential libpq-dev cron git \
-    python3-dev --yes
+    build-essential libpq-dev cron git libopenblas-dev liblapack-dev libatlas-base-dev libblas-dev gfortran \
+     --yes
 
 FROM base as build
 
@@ -20,16 +18,14 @@ COPY requirements.txt .
 
 RUN mkdir /install
 
-RUN pip download --destination-directory /install -r /app/requirements.txt -i https://pypi.douban.com/simple
+RUN pip download --destination-directory /install -r /app/requirements.txt
 
-FROM python:3.7.4-slim  as release
+FROM python:3.8-slim  as release
 
 COPY ./docker/sources.list .
 
-RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && mv ./sources.list /etc/apt/
-
-RUN apt-get update && apt-get -y install cron git
-
+RUN apt-get update && apt-get -y install cron git gcc  build-essential libpq-dev cron git libopenblas-dev liblapack-dev libatlas-base-dev libblas-dev gfortran
+RUN apt-get install -y libxml2-dev libxslt-dev
 WORKDIR /app
 
 COPY --from=build /install /install
@@ -49,7 +45,5 @@ RUN rm -rf /install &&  rm -rf /root/.cache/pip
 RUN chmod 755 /app/docker/*.sh
 
 EXPOSE 8000
-
-LABEL maintainer="gxtrobot <gxtrobot@gmail.com>"
 
 CMD ["/app/docker/entry.sh"]
