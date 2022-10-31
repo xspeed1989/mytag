@@ -6,6 +6,7 @@ from collections import namedtuple
 from urllib.parse import urljoin
 from requests_html import HTML
 from aspider.routeing import get_router
+from bustag.util import APP_CONFIG
 router = get_router()
 
 

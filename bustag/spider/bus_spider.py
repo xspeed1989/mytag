@@ -53,7 +53,7 @@ def process_item(text, path, fanhao):
     '''
     logger.debug(f'process item {fanhao}')
     url = path
-    meta, tags = parse_item(text, url)
+    meta, tags = parse_item(text, get_full_url(fanhao))
     meta.update(url=url)
 #     logger.debug('meta keys', len(meta.keys()))
 #     logger.debug('tag count', len(tags))
