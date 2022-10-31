@@ -27,8 +27,10 @@ def parse_item(text, url):
     title = html.find(title_css)[0].text
     cover_img_css = 'body > div.container > div.row.movie > div.col-md-9.screencap > a'
     cover_img_url = html.find(cover_img_css)[0].attrs['href']
+    print(f'is full image: {cover_img_url.startswith("http")}')
     if cover_img_url.startswith("http") == False :
         cover_img_url = urljoin(url, cover_img_url)
+    print(f'image: {cover_img_url}')
     tags_css = 'body > div.container > div.row.movie > div.col-md-3.info'
     tags = html.find(tags_css)[0].find('p')
     release_date = tags[1].text
