@@ -3,6 +3,7 @@ html parser to extract data
 '''
 import re
 from collections import namedtuple
+from urllib.parse import urljoin
 from requests_html import HTML
 from aspider.routeing import get_router
 router = get_router()
@@ -11,7 +12,7 @@ router = get_router()
 Tag = namedtuple('Tag', ['type', 'value', 'link'])
 
 
-def parse_item(text):
+def parse_item(text, url):
     '''
     Args:
         text : str - html text
@@ -26,6 +27,8 @@ def parse_item(text):
     title = html.find(title_css)[0].text
     cover_img_css = 'body > div.container > div.row.movie > div.col-md-9.screencap > a'
     cover_img_url = html.find(cover_img_css)[0].attrs['href']
+    if cover_img_url.startswith("http") == False :
+        cover_img_url = urljoin(url, cover_img_url)
     tags_css = 'body > div.container > div.row.movie > div.col-md-3.info'
     tags = html.find(tags_css)[0].find('p')
     release_date = tags[1].text
