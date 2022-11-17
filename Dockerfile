@@ -7,7 +7,7 @@ WORKDIR /app
 RUN apt-get -o Acquire::Check-Valid-Until=false update \
     && apt-get install \
     --no-install-recommends --yes \
-    build-essential libpq-dev cron git libopenblas-dev liblapack-dev libatlas-base-dev libblas-dev gfortran zlib1g-dev \
+    build-essential libpq-dev cron git libopenblas-dev liblapack-dev libatlas-base-dev libblas-dev gfortran zlib1g-dev cmake pkg-config \
      --yes
 
 FROM base as build
