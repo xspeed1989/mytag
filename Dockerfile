@@ -17,11 +17,11 @@ COPY requirements.txt .
 RUN mkdir /install
 RUN pip install --upgrade pip
 
-RUN pip install aspider
-RUN pip install numpy
-RUN pip install pandas
-RUN pip download --destination-directory /install -r /app/requirements.txt -i https://www.piwheels.org/simple
-
+#RUN pip install aspider
+#RUN pip install numpy
+#RUN pip install pandas
+#RUN pip download --destination-directory /install -r /app/requirements.txt -i https://www.piwheels.org/simple
+RUN pip download --destination-directory /install -r /app/requirements.txt
 FROM python:3.9-slim  as release
 
 RUN apt-get update && apt-get -y install cron git gcc  build-essential libpq-dev cron git libopenblas-dev liblapack-dev libatlas-base-dev libblas-dev gfortran
@@ -31,9 +31,9 @@ WORKDIR /app
 COPY --from=build /install /install
 
 COPY requirements.txt .
-RUN pip install aspider
-RUN pip install numpy
-RUN pip install pandas
+#RUN pip install aspider
+#RUN pip install numpy
+#RUN pip install pandas
 RUN pip install --no-index --find-links=/install -r requirements.txt
 
 RUN mkdir /app/docker
