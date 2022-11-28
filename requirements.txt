@@ -1,5 +1,5 @@
 wheel
-aspide
+aspider
 cython
 aiohttp
 apscheduler
@@ -14,5 +14,4 @@ pytz
 requests_html
 scikit_learn
 setuptools
-opencv-python -i https://www.piwheels.org/simple/
 -e git+https://github.com/wzzqq/mytag.git#egg=bustag
