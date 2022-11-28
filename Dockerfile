@@ -1,4 +1,4 @@
-FROM python:3.8-slim as base
+FROM python:3.9-slim as base
 
 # Create app directory
 WORKDIR /app
@@ -20,7 +20,7 @@ RUN pip install --upgrade pip
 RUN pip install aspider
 RUN pip download --destination-directory /install -r /app/requirements.txt -i https://www.piwheels.org/simple
 
-FROM python:3.8-slim  as release
+FROM python:3.9-slim  as release
 
 RUN apt-get update && apt-get -y install cron git gcc  build-essential libpq-dev cron git libopenblas-dev liblapack-dev libatlas-base-dev libblas-dev gfortran
 RUN apt-get install -y libxml2-dev libxslt-dev zlib1g-dev libopenblas-dev cmake pkg-config
