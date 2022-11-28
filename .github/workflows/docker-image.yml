@@ -3,12 +3,12 @@ name: ci
 on:
   push:
     branches:
-      - 'main'
+      - 'dev'
     tags:
       - 'v*'
   pull_request:
     branches:
-      - 'main'
+      - 'dev'
 
 jobs:
   docker:
@@ -18,24 +18,29 @@ jobs:
         name: Checkout
         uses: actions/checkout@v3
       -
-        name: Login to DockerHub
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v2
+        name: Set Up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      -
+        name: Set Up Buildx
+        uses: docker/setup-buildx-action@v1
+
+      -
+        name: Login DockerHub
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
       -
-        name: Set up Docker Buildx
-      # 使用buildx来构建镜像，这个工具功能很丰富
-        uses: crazy-max/ghaction-docker-buildx@v1
+        name: Buildx
+        uses: docker/build-push-action@v2
         with:
-          buildx-version: latest
-      -
-        name: Build dockerfile (with push)
-      # 构建镜像，用buildx可以同时构建X86和ARM架构的镜像，然后推送到hub.docker.com
-        run: |
-          docker buildx build \
-          --platform=linux/amd64,linux/arm64 \
-          --output "type=image,push=true" \
-          --file ./Dockerfile . \
-          --tag zxc147/bustag-m:latest
+          context: .
+          file: ./Dockerfile
+          platforms: |
+            linux/amd64
+            linux/arm64
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/b}ustag-m:lates
