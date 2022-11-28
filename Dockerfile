@@ -15,7 +15,7 @@ FROM base as build
 COPY requirements.txt .
 
 RUN mkdir /install
-
+RUN pip install --upgrade pip
 RUN pip download --destination-directory /install -r /app/requirements.txt -i https://www.piwheels.org/simple
 
 FROM python:3.8-slim  as release
