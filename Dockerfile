@@ -7,7 +7,7 @@ WORKDIR /app
 RUN apt-get -o Acquire::Check-Valid-Until=false update \
     && apt-get install \
     --no-install-recommends --yes \
-    build-essential libpq-dev cron git libopenblas-dev liblapack-dev libatlas-base-dev libblas-dev gfortran zlib1g-dev cmake pkg-config \
+    build-essential libpq-dev cron libgfortran5 libatlas3-base git libopenblas-dev liblapack-dev libatlas-base-dev libblas-dev gfortran zlib1g-dev cmake pkg-config \
      --yes
 
 FROM base as build
@@ -23,7 +23,7 @@ RUN pip download --destination-directory /install -r /app/requirements.txt -i ht
 FROM python:3.9-slim  as release
 
 RUN apt-get update && apt-get -y install cron git gcc  build-essential libpq-dev cron git libopenblas-dev liblapack-dev libatlas-base-dev libblas-dev gfortran
-RUN apt-get install -y libxml2-dev libxslt-dev zlib1g-dev libopenblas-dev cmake pkg-config
+RUN apt-get install -y libxml2-dev libxslt-dev libgfortran5 libatlas3-base zlib1g-dev libopenblas-dev cmake pkg-config
 WORKDIR /app
 
 COPY --from=build /install /install
