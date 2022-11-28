@@ -4,7 +4,6 @@ aiohttp
 apscheduler
 bottle
 click
-numpy
 oldest-supported-numpy
 pandas
 peewee
