@@ -20,7 +20,7 @@ RUN pip install --upgrade pip
 #RUN pip install aspider
 #RUN pip install numpy
 #RUN pip install pandas
-RUN pip install opencv-python -i https://www.piwheels.org/simple/
+#RUN pip install opencv-python -i https://www.piwheels.org/simple/
 #RUN pip download --destination-directory /install -r /app/requirements.txt -i https://www.piwheels.org/simple
 RUN pip download --destination-directory /install -r /app/requirements.txt
 FROM python:3.9-slim  as release
@@ -35,7 +35,7 @@ COPY requirements.txt .
 #RUN pip install aspider
 #RUN pip install numpy
 #RUN pip install pandas
-RUN pip install opencv-python -i https://www.piwheels.org/simple/
+#RUN pip install opencv-python -i https://www.piwheels.org/simple/
 RUN pip install --no-index --find-links=/install -r requirements.txt
 
 RUN mkdir /app/docker
