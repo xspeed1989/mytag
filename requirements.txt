@@ -1,9 +1,12 @@
 wheel
+aspide
 cython
 aiohttp
 apscheduler
 bottle
+numpy
 click
+pandas
 oldest-supported-numpy
 peewee
 pytest
@@ -11,5 +14,5 @@ pytz
 requests_html
 scikit_learn
 setuptools
-opencv-python
+opencv-python -i https://www.piwheels.org/simple/
 -e git+https://github.com/wzzqq/mytag.git#egg=bustag
