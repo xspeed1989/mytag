@@ -19,6 +19,7 @@ RUN pip install --upgrade pip
 
 RUN pip install aspider
 RUN pip install numpy
+RUN pip install pandas
 RUN pip download --destination-directory /install -r /app/requirements.txt -i https://www.piwheels.org/simple
 
 FROM python:3.9-slim  as release
@@ -32,6 +33,7 @@ COPY --from=build /install /install
 COPY requirements.txt .
 RUN pip install aspider
 RUN pip install numpy
+RUN pip install pandas
 RUN pip install --no-index --find-links=/install -r requirements.txt
 
 RUN mkdir /app/docker
