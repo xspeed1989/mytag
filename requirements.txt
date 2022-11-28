@@ -2,7 +2,6 @@ wheel
 cython
 aiohttp
 apscheduler
-aspider
 bottle
 click
 numpy
