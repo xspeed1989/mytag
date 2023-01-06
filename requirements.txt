@@ -14,4 +14,5 @@ pytz==2022.6
 requests_html==0.10.0
 scikit_learn
 setuptools==59.2.0
+paste
 -e git+https://github.com/xspeed1989/mytag.git#egg=bustag
